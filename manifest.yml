@@ -1,0 +1,7 @@
+---
+applications:
+  - name: rahul-mscores-exlprov
+    memory: 128M
+    disk: 100M
+    buildpack: nodejs_buildpack
+    command: node index.js

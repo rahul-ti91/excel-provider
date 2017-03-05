@@ -1,0 +1,16 @@
+{
+  "name": "export2exl",
+  "version": "1.0.0",
+  "description": "to to export json as excel",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "rahul",
+  "license": "ISC",
+  "dependencies": {
+    "cfenv": "^1.0.4",
+    "express": "3.x",
+    "node-excel-export": "^1.2.0"
+  }
+}
