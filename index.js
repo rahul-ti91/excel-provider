@@ -40,6 +40,12 @@ var styles = {
             horizontal: "center"
         }
     },
+    cellDate: {
+        alignment: {
+            horizontal: "center"
+        },
+        numFmt: "m/dd/yy"
+    },
     cellApp: {
         fill: {
             fgColor: {
@@ -68,233 +74,108 @@ var appObj = { // <- the key should match the actual data key
     width: 120 // <- width in pixels 
 };
 
-var creationdate = {
-    displayName: 'Creation Date',
-    headerStyle: styles.headerDark,
-    cellStyle: styles.cellPink,
-    cellFormat: function (value, row) { // <- Renderer function, you can access also any row.property 
-        return (new Date(value)).toLocaleDateString();
-    }, // <- Cell style 
-    width: 110 // <- width in pixels 
+var normalObj = function (displayName, size, centerAlign) {
+    if (centerAlign) {
+        return {
+            displayName: displayName,
+            headerStyle: styles.headerDark,
+            cellStyle: styles.cellPink,
+            width: size
+        }
+    } else {
+        return {
+            displayName: displayName,
+            headerStyle: styles.headerDark,
+            width: size
+        }
+    }
 };
 
-var specification_colseactivity = {
-
-    applicationName: appObj,
-    activityDate: {
-        displayName: 'Closing Date',
+var dateObj = function (displayName, size) {
+    return {
+        displayName: displayName,
         headerStyle: styles.headerDark,
-        cellStyle: styles.cellPink, // <- Cell style 
-        cellFormat: function (value, row) { // <- Renderer function, you can access also any row.property 
-            return (new Date(value)).toLocaleDateString();
+        cellStyle: styles.cellDate,
+        cellFormat: function (value, row) {
+            return (new Date(value));
         },
-        width: 110 // <- width in pixels 
-    },
-    frequency: {
-        displayName: 'Frequency',
-        headerStyle: styles.headerDark,
-        cellStyle: styles.cellPink, // <- Cell style 
-        width: 110 // <- width in chars (when the number is passed as string) 
-    },
-    description: {
-        displayName: 'Description',
-        headerStyle: styles.headerDark,
-        //  cellStyle: styles.cellPink, // <- Cell style 
-        width: 220 // <- width in pixels 
-    },
-    creationDate: creationdate
+        width: size
+    }
+}
+
+var specification_colseactivity = {
+    applicationName: appObj,
+    activityDate: dateObj("Closing Date", 110),
+    frequency: normalObj("Frequency", 110, true),
+    description: normalObj("Description", 220, false),
+    creationDate: dateObj("Creation Date", 110)
 };
 
 var specification_outages = {
     applicationName: appObj,
-    outageDate: {
-        displayName: 'Outage Date',
-        headerStyle: styles.headerDark,
-        cellStyle: styles.cellPink, // <- Cell style 
-        cellFormat: function (value, row) { // <- Renderer function, you can access also any row.property 
-            return (new Date(value)).toLocaleDateString();
-        },
-        width: 110 // <- width in chars (when the number is passed as string) 
-    },
-    startTime: {
-        displayName: 'Start Time',
-        headerStyle: styles.headerDark,
-        cellStyle: styles.cellPink, // <- Cell style 
-        width: 110 // <- width in pixels 
-    },
-    duration: {
-        displayName: 'Duration',
-        headerStyle: styles.headerDark,
-        cellStyle: styles.cellPink, // <- Cell style 
-        width: 110 // <- width in pixels 
-    },
-    outageType: {
-        displayName: 'Outage Type',
-        headerStyle: styles.headerDark,
-        cellStyle: styles.cellPink, // <- Cell style 
-        width: 110 // <- width in pixels 
-    },
-    rcaDone: {
-        displayName: 'RCA Status',
-        headerStyle: styles.headerDark,
-        cellStyle: styles.cellPink, // <- Cell style 
-        width: 110 // <- width in pixels 
-    },
-    outageReason: {
-        displayName: 'Outage Reason',
-        headerStyle: styles.headerDark,
-        width: 220 // <- width in pixels 
-    },
-    creationDate: creationdate
+    outageDate: dateObj("Outage Date", 110),
+    startTime: normalObj("Start Time", 110, true),
+    duration: normalObj("Duration", 110, true),
+    outageType: normalObj("Outage Type", 110, true),
+    rcaDone: normalObj("RCA Status", 110, true),
+    outageReason: normalObj("Outage Reason", 220, false),
+    creationDate: dateObj("Creation Date", 110)
 };
 
 var specification_releasecalendar = {
     applicationName: appObj,
-    releaseCompletionDate: {
-        displayName: 'Release Completion Date',
-        headerStyle: styles.headerDark,
-        cellStyle: styles.cellPink, // <- Cell style 
-        cellFormat: function (value, row) { // <- Renderer function, you can access also any row.property 
-            return (new Date(value)).toLocaleDateString();
-        },
-        width: 190 // <- width in chars (when the number is passed as string) 
-    },
-    upcomingReleaseDate: {
-        displayName: 'Upcoming Release Date',
-        headerStyle: styles.headerDark,
-        cellStyle: styles.cellPink, // <- Cell style 
-        cellFormat: function (value, row) { // <- Renderer function, you can access also any row.property 
-            return (new Date(value)).toLocaleDateString();
-        },
-        width: 190 // <- width in pixels 
-    },
-    creationDate: creationdate
+    releaseCompletionDate: dateObj("Release Completion Date", 190),
+    upcomingReleaseDate: dateObj("Upcoming Release Date", 190),
+    creationDate: dateObj("Creation Date", 110)
 };
 
 var specification_drcalendar = {
     applicationName: appObj,
-    drCompletionDate: {
-        displayName: 'DR Completion Date',
-        headerStyle: styles.headerDark,
-        cellStyle: styles.cellPink, // <- Cell style 
-        cellFormat: function (value, row) { // <- Renderer function, you can access also any row.property 
-            return (new Date(value)).toLocaleDateString();
-        },
-        width: 150 // <- width in chars (when the number is passed as string) 
-    },
-    upcomingDRDate: {
-        displayName: 'Upcoming DR Date',
-        headerStyle: styles.headerDark,
-        cellStyle: styles.cellPink, // <- Cell style 
-        cellFormat: function (value, row) { // <- Renderer function, you can access also any row.property 
-            return (new Date(value)).toLocaleDateString();
-        },
-        width: 150 // <- width in pixels 
-    },
-    creationDate: creationdate
+    drCompletionDate: dateObj("DR Completion Date", 150),
+    upcomingDRDate: dateObj("Upcoming DR Date", 150),
+    creationDate: dateObj("Creation Date", 110)
 };
 
 var specification_appreciations = {
     applicationName: appObj,
-    appreciation: {
-        displayName: 'Appreciations',
-        headerStyle: styles.headerDark,
-        width: 110 // <- width in chars (when the number is passed as string) 
-    },
-    creationDate: creationdate
+    appreciation: normalObj("Appreciations", 220, false),
+    creationDate: dateObj("Creation Date", 110)
 };
 
 var specification_coresissues = {
     applicationName: appObj,
-    issue: {
-        displayName: 'Issue',
-        headerStyle: styles.headerDark,
-        width: 220 // <- width in chars (when the number is passed as string) 
-    },
-    creationDate: creationdate
+    issue: normalObj("Issue", 220, false),
+    creationDate: dateObj("Creation Date", 110)
 };
 
 var specification_ideas = {
     applicationName: appObj,
-    ideaState: {
-        displayName: 'Idea State',
-        headerStyle: styles.headerDark,
-        cellStyle: styles.cellPink, // <- Cell style 
-        width: 110 // <- width in chars (when the number is passed as string) 
-    },
-    ideaDescription: {
-        displayName: 'Idea Description',
-        headerStyle: styles.headerDark,
-        width: 220 // <- width in chars (when the number is passed as string) 
-    },
-    businessBenefits: {
-        displayName: 'Business Benefits',
-        headerStyle: styles.headerDark,
-        width: 220 // <- width in chars (when the number is passed as string) 
-    },
-    implamentationPlan: {
-        displayName: 'Implamentation Plan',
-        headerStyle: styles.headerDark,
-        width: 220 // <- width in chars (when the number is passed as string) 
-    },
-    creationDate: creationdate
+    ideaState: normalObj("Idea State", 110, true),
+    ideaDescription: normalObj("Idea Description", 220, false),
+    businessBenefits: normalObj("Business Benefits", 220, false),
+    implamentationPlan: normalObj("Implamentation Plan", 220, false),
+    creationDate: dateObj("Creation Date", 110)
 };
 
 var specification_trainings = {
-    empName: {
-        displayName: 'Employee Name',
-        headerStyle: styles.headerDark,
-        cellStyle: styles.cellPink, // <- Cell style 
-        width: 110 // <- width in chars (when the number is passed as string) 
-    },
-    trainingType: {
-        displayName: 'Training Type',
-        headerStyle: styles.headerDark,
-        cellStyle: styles.cellPink, // <- Cell style 
-        width: 110 // <- width in chars (when the number is passed as string) 
-    },
-    trainingName: {
-        displayName: 'Training Name',
-        headerStyle: styles.headerDark,
-        cellStyle: styles.cellPink, // <- Cell style 
-        width: 110 // <- width in chars (when the number is passed as string) 
-    },
-    creationDate: creationdate
+    empName: normalObj("Employee Name", 110, true),
+    trainingType: normalObj("Training Type", 110, true),
+    trainingName: normalObj("Training Name", 110, true),
+    creationDate: dateObj("Creation Date", 110)
 };
 
 var specification_nonsndata = {
     applicationName: appObj,
-    week: {
-        displayName: 'Week',
-        headerStyle: styles.headerDark,
-        cellStyle: styles.cellPink, // <- Cell style 
-        width: 110 // <- width in chars (when the number is passed as string) 
-    },
-    data: {
-        displayName: 'Data',
-        headerStyle: styles.headerDark,
-        width: 220 // <- width in chars (when the number is passed as string) 
-    },
-    creationDate: creationdate
+    week: dateObj("Week", 110),
+    data: normalObj("Data", 220, false),
+    creationDate: dateObj("Creation Date", 110)
 };
 
 var specification_weeklyhighlights = {
     applicationName: appObj,
-    week: {
-        displayName: 'Week',
-        headerStyle: styles.headerDark,
-        cellStyle: styles.cellPink, // <- Cell style 
-        cellFormat: function (value, row) { // <- Renderer function, you can access also any row.property 
-            return (new Date(value)).toLocaleDateString();
-        },
-        width: 110 // <- width in chars (when the number is passed as string) 
-    },
-    highlights: {
-        displayName: 'Highlights',
-        headerStyle: styles.headerDark,
-        width: 220 // <- width in chars (when the number is passed as string) 
-    },
-    creationDate: creationdate
+    week: dateObj("Week", 110),
+    highlights: normalObj("Highlights", 220, false),
+    creationDate: dateObj("Creation Date", 110)
 };
 
 app.get('/Large', function (req, res) {
