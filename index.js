@@ -178,6 +178,17 @@ var specification_weeklyhighlights = {
     creationDate: dateObj("Creation Date", 110)
 };
 
+
+var specification_leaves = {
+    applicationName: appObj,
+    associate: normalObj("Associate Name", 220, false),
+    leaveStartDate: dateObj("Leave Start Date", 110),
+    leaveEndDate: dateObj("Leave End Date", 110),
+    backup: normalObj("Backup Associate", 220, false),
+    leaveType: normalObj("Leave Type", 110, true),
+    creationDate: dateObj("Creation Date", 110)
+}
+
 app.get('/Large', function (req, res) {
 
     request('https://cores-msr-jpa.run.aws-usw02-pr.ice.predix.io/report?month=' + (req.query.month | 3), function (error, response, body) {
@@ -223,6 +234,10 @@ app.get('/Large', function (req, res) {
                     name: 'Trainings', // <- Specify sheet name (optional) 
                     specification: specification_trainings, // <- Report specification 
                     data: result.trainings // <-- Report data 
+                }, {
+                    name: 'Leaves',
+                    specification: specification_leaves,
+                    data: result.leaveCalendars
                 }
             ]);
         res.setHeader('Content-Type', 'application/vnd.openxmlformats');
