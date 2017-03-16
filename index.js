@@ -178,7 +178,6 @@ var specification_weeklyhighlights = {
     creationDate: dateObj("Creation Date", 110)
 };
 
-
 var specification_leaves = {
     applicationName: appObj,
     associate: normalObj("Associate Name", 220, false),
@@ -189,7 +188,15 @@ var specification_leaves = {
     creationDate: dateObj("Creation Date", 110)
 }
 
-app.get('/Large', function (req, res) {
+var specification_highlights = {
+    applicationName: appObj,
+    week: dateObj("Week", 110),
+    highlights: normalObj("Highlights", 220, false),
+    creationDate: dateObj("Creation Date", 110)
+}
+
+
+app.get('/Report', function (req, res) {
 
     request('https://cores-msr-jpa.run.aws-usw02-pr.ice.predix.io/report?month=' + (req.query.month | 3), function (error, response, body) {
         console.log('error:', error); // Print the error if one occurred 
@@ -238,6 +245,10 @@ app.get('/Large', function (req, res) {
                     name: 'Leaves',
                     specification: specification_leaves,
                     data: result.leaveCalendars
+                }, {
+                    name: 'Weekly Highlights',
+                    specification: specification_highlights,
+                    data: result.weeklyHighlights
                 }
             ]);
         res.setHeader('Content-Type', 'application/vnd.openxmlformats');
