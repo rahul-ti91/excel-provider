@@ -203,6 +203,7 @@ app.get('/Report', function (req, res) {
         console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
         console.log('body:', body);
         var result = JSON.parse(body);
+        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         var report = excel.buildExport(
             [
                 {
@@ -252,8 +253,8 @@ app.get('/Report', function (req, res) {
                 }
             ]);
         res.setHeader('Content-Type', 'application/vnd.openxmlformats');
-        res.setHeader("Content-Disposition", "attachment; filename=" + "report.xlsx");
-        res.attachment('report.xlsx'); // This is sails.js specific (in general you need to set headers) 
+        res.setHeader("Content-Disposition", "attachment; filename=" + "MSR for "+ months[(req.query.month | 3) - 1]+".xlsx");
+        res.attachment('MSR for '+ months[(req.query.month | 3) - 1]+'.xlsx'); // This is sails.js specific (in general you need to set headers) 
         res.send(report);
     });
 });
